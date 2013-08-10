@@ -12,9 +12,7 @@
 
 ####2 降低画质
 
-现有四套方案：
+现有两套方案：
 
-1. **运行screencap 获得raw数据后在设备上缩小为1/4（push到设备中后使用PC端控制，C+管道，png结构）**
-2. 运行screencap -p 获得png在设备上缩小为1/4（设备端使用Service维护图像序列供PC端pull，Java）
-3. 重写screencap使图像直接缩小为1/4后储存（push到设备中后使用PC端控制，C）
-4. **利用ddmlib.jar重写PC端程序获得截图（Java）**
+1. 运行screencap 获得raw数据后在设备上缩小为1/4（push到设备中后使用PC端控制，C+管道，png结构）
+2. 利用ddmlib.jar重写PC端程序获得截图（Java）
