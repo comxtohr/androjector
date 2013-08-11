@@ -14,5 +14,7 @@
 
 现有两套方案：
 
-1. 运行screencap 获得raw数据后在设备上缩小为1/4（push到设备中后使用PC端控制，C+管道，png结构）
+1. 运行screencap 获得raw数据后在设备上缩小为1/4（push到设备中后使用PC端控制，C + 管道，bmp + gzip）
 2. 利用ddmlib.jar重写PC端程序获得截图（Java）
+
+(libpng在Android平台上移植失败，放弃使用png压缩图片改用gzip)
