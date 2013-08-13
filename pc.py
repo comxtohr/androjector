@@ -21,15 +21,15 @@ if cmd == "y":
 	p.stdin.write("exit\n")
 	p.stdin.write("exit\n")
 
-	os.system("adb push ~/scp/obj/local/armeabi/scp /system/")
+	os.system("adb push ./scp/obj/local/armeabi/scp /system/")
 	os.system("adb shell chmod 777 /system/scp")
 cmd = raw_input("Start? y | n:")
 if cmd == "y":
 	flag = True
 	while 1 > 0:
 		os.system('adb shell "/system/bin/screencap | /system/scp | gzip >/mnt/sdcard/shot.gz"')
-		os.system("adb pull /mnt/sdcard/shot.gz ~")
-		f = commands.getoutput("gzip -c -d ~/shot.gz")
+		os.system("adb pull /mnt/sdcard/shot.gz .")
+		f = commands.getoutput("gzip -c -d ./shot.gz")
 		if flag == True:
 			width,height = struct.unpack("ii",f[0:8])
 			img = cv.CreateImage((width,height),cv.IPL_DEPTH_8U,3)
