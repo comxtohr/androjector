@@ -34,21 +34,24 @@ if cmd == "y":
 #		cv.WaitKey(50)
 #	cv.DestoryWindow("androjector")
 #elif cmd == "2":
-	while 1 > 0:
-		os.system('adb shell "/system/bin/screencap | /system/scp >/mnt/sdcard/shot"')
-		os.system("adb shell gzip /mnt/sdcard/shot")
-		os.system("adb pull /mnt/sdcard/shot.gz ~")
-		os.system("gzip -d ~/shot.gz")
-		f = open("/Users/carl/shot","rb")
-		try:
+flag = True
+while 1 > 0:
+	os.system('adb shell "/system/bin/screencap | /system/scp | gzip >/mnt/sdcard/shot.gz"')
+	os.system("adb pull /mnt/sdcard/shot.gz ~")
+	os.system("gzip -d -f  ~/shot.gz")
+	f = open("/Users/carl/shot","rb")
+	try:
+		if flag == True:
 			width,height = struct.unpack("ii",f.read(8))
 			img = cv.CreateImage((width,height),cv.IPL_DEPTH_8U,3)
-			for i in range(0,height):
-				for j in range(0,width):
-					b,g,r = struct.unpack("BBB",f.read(3))
-					cv.Set2D(img,i,j,cv.Scalar(r,g,b))
-			cv.ShowImage("androjector",img)
-			cv.WaitKey(20)
-		finally:
-			f.close()
-			os.system("rm ~/shot")
+		else:
+			f.read(8)
+		for i in range(0,height):
+			for j in range(0,width):
+				b,g,r = struct.unpack("BBB",f.read(3))
+				cv.Set2D(img,i,j,cv.Scalar(r,g,b))
+		cv.ShowImage("androjector",img)
+		cv.WaitKey(20)
+		flag = False
+	finally:
+		f.close()
