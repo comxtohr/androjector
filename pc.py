@@ -2,6 +2,7 @@ import os
 import commands
 import subprocess
 import cv
+import struct
 cmd = raw_input("Connect? y | n:")
 if cmd == "y":
 	ip = raw_input("IP:")
@@ -22,19 +23,32 @@ if cmd == "y":
 
 	os.system("adb push ~/scp/obj/local/armeabi/scp /system/")
 	os.system("adb shell chmod 777 /system/scp")
-cmd = raw_input("Mode? 1 | 2 :")
-if cmd == "1":
-	cv.NamedWindow("androjector",cv.CV_WINDOE_AUTOSIZE)
+#cmd = raw_input("Mode? 1 | 2 :")
+#if cmd == "1":
+#	cv.NamedWindow("androjector",cv.CV_WINDOE_AUTOSIZE)
+#	while 1 > 0:
+#		os.system("adb shell /system/bin/screencap -p /sdcard/shot.png")
+#		os.system("adb pull /sdcard/shot.png ~")
+#		img = cv.LoadImage("/Users/carl/shot.png")
+#		cv.ShowImage("androjector",img)
+#		cv.WaitKey(50)
+#	cv.DestoryWindow("androjector")
+#elif cmd == "2":
 	while 1 > 0:
-		os.system("adb shell /system/bin/screencap -p /sdcard/shot.png")
-		os.system("adb pull /sdcard/shot.png ~")
-		img = cv.LoadImage("/Users/carl/shot.png")
-		cv.ShowImage("androjector",img)
-		cv.WaitKey(50)
-	cv.DestoryWindow("androjector")
-elif cmd == "2":
-	#while 1 > 0:
-	os.system('adb shell "/system/bin/screencap | /system/scp >/mnt/sdcard/shot"')
-	os.system("adb shell gzip /mnt/sdcard/shot")
-	os.system("adb pull /mnt/sdcard/shot.gz ~")
-	os.system("gzip -d ~/shot.gz")
+		os.system('adb shell "/system/bin/screencap | /system/scp >/mnt/sdcard/shot"')
+		os.system("adb shell gzip /mnt/sdcard/shot")
+		os.system("adb pull /mnt/sdcard/shot.gz ~")
+		os.system("gzip -d ~/shot.gz")
+		f = open("/Users/carl/shot","rb")
+		try:
+			width,height = struct.unpack("ii",f.read(8))
+			img = cv.CreateImage((width,height),cv.IPL_DEPTH_8U,3)
+			for i in range(0,height):
+				for j in range(0,width):
+					b,g,r = struct.unpack("BBB",f.read(3))
+					cv.Set2D(img,i,j,cv.Scalar(r,g,b))
+			cv.ShowImage("androjector",img)
+			cv.WaitKey(20)
+		finally:
+			f.close()
+			os.system("rm ~/shot")
