@@ -2,7 +2,7 @@
 
 ###功能
 
-通过WiFI或者USB连接，在PC上实时显示Android设备屏幕
+通过Wi-Fi或者USB连接，在PC上实时显示Android设备屏幕
 
 ###构成
 
