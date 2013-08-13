@@ -39,7 +39,7 @@ void process(int width,int height,int bits,int format)
 					buf[0] = buf[2];
 					buf[2] = buf[3];
 				}
-				if (format == 4)
+				else if (format == 4)
 				{
 					r = ((buf[1] << 8 + buf[0]) & 0xF800) >> 11;
 					g = ((buf[1] << 8 + buf[0]) & 0x7E0) >> 5;
@@ -48,7 +48,7 @@ void process(int width,int height,int bits,int format)
 					buf[1] = (unsigned char)g;
 					buf[2] = (unsigned char)r;
 				}
-				if (format == 6)
+				else if (format == 6)
 				{
 					r = ((buf[1] << 8 + buf[0]) & 0x7C00 ) >> 10;
 					g = ((buf[1] << 8 + buf[0]) & 0x3E0) >> 5;
@@ -57,7 +57,7 @@ void process(int width,int height,int bits,int format)
 					buf[1] = (unsigned char)g;
 					buf[2] = (unsigned char)r;
 				}
-				if (format == 7)
+				else if (format == 7)
 				{
 					r = ((buf[1] << 8 + buf[0]) & 0xF00) >> 8;
 					g = ((buf[1] << 8 + buf[0]) & 0xF0) >> 4;
