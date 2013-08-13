@@ -1,5 +1,9 @@
 ##Androjector
 
+Author: Sun Tong, E-mail: <somhtong@gmail.com>
+
+School of Computer Science and Technology , Harbin Institute of Technology
+
 ###功能
 
 通过Wi-Fi或者USB连接，在PC上实时显示Android设备屏幕
