@@ -18,5 +18,7 @@
 2. 利用ddmlib.jar重写PC端程序获得截图（Java）
 
 (libpng在Android平台上移植失败，放弃使用png压缩图片改用gzip)
+
 (降低画质的方案1已完成为2.0版本，采用screencap --> scp(降低画质) --> gzip --> pull --> gzip -d --> openCV --> rm 的流程)
+
 (2.1版本计划将gzip -d 改为gzip -c，以减少文件读写操作以及 rm 操作)
