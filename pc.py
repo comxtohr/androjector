@@ -1,17 +1,40 @@
 import os
-import time
+import commands
+import subprocess
 import cv
-
-ip = raw_input("IP:")
-os.system("adb connect " + ip + ":5555") 
-cmd = raw_input("start?y|n:")
+cmd = raw_input("Connect? y | n:")
 if cmd == "y":
-	cv.NamedWindow("window", cv.CV_WINDOW_AUTOSIZE)
+	ip = raw_input("IP:")
+	os.system("adb connect "+ ip + ":5555")
+
+cmd = raw_input("Push? y | n :")
+if cmd == "y":
+	arg0 = commands.getoutput("adb shell mount | grep /system | cut -d ' ' -f 3")
+	arg1 = commands.getoutput("adb shell mount | grep /system | cut -d ' ' -f 1")
+	arg2 = commands.getoutput("adb shell mount | grep /system | cut -d ' ' -f 2")
+
+	p = subprocess.Popen("adb shell",stdin = subprocess.PIPE,stdout = subprocess.PIPE,stderr = subprocess.PIPE,shell = True)
+	p.stdin.write("su\n")
+	p.stdin.write("mount -o rw,remount -t " + arg0 + " " + arg1 + " " + arg2 +"\n")
+	p.stdin.write("chmod 777 /system\n")
+	p.stdin.write("exit\n")
+	p.stdin.write("exit\n")
+
+	os.system("adb push ~/scp/obj/local/armeabi/scp /system/")
+	os.system("adb shell chmod 777 /system/scp")
+cmd = raw_input("Mode? 1 | 2 :")
+if cmd == "1":
+	cv.NamedWindow("androjector",cv.CV_WINDOE_AUTOSIZE)
 	while 1 > 0:
-		os.system("adb shell /system/bin/screencap -p /sdcard/screenshot.png")
-		os.system("adb pull /sdcard/screenshot.png ~")
-		img = cv.LoadImage("/Users/carl/screenshot.png")
-		cv.ShowImage("window",img)
+	os.system("adb shell /system/bin/screencap -p /sdcard/shot.png")
+	os.system("adb pull /sdcard/shot.png ~")
+		img = cv.LoadImage("/Users/carl/shot.png")
+		cv.ShowImage("androjector",img)
 		cv.WaitKey(50)
-	cv.DestroyWindow("window")
-exit()
+	cv.DestoryWindow("androjector")
+elif cmd == "2":
+	#while 1 > 0:
+	os.system('adb shell "/system/bin/screencap | /system/scp >/mnt/sdcard/shot"')
+	os.system("adb shell gzip /mnt/sdcard/shot")
+	os.system("adb pull /mnt/sdcard/shot.gz ~")
+	os.system("gzip -d ~/shot.gz")
