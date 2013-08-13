@@ -2,7 +2,7 @@
 
 Author: Sun Tong, E-mail: <somhtong@gmail.com>
 
-School of Computer Science and Technology , Harbin Institute of Technology
+FoOTOo Lab (IBMTC), School of Computer Science and Technology , Harbin Institute of Technology
 
 ###功能
 
