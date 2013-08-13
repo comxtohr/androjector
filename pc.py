@@ -26,8 +26,8 @@ cmd = raw_input("Mode? 1 | 2 :")
 if cmd == "1":
 	cv.NamedWindow("androjector",cv.CV_WINDOE_AUTOSIZE)
 	while 1 > 0:
-	os.system("adb shell /system/bin/screencap -p /sdcard/shot.png")
-	os.system("adb pull /sdcard/shot.png ~")
+		os.system("adb shell /system/bin/screencap -p /sdcard/shot.png")
+		os.system("adb pull /sdcard/shot.png ~")
 		img = cv.LoadImage("/Users/carl/shot.png")
 		cv.ShowImage("androjector",img)
 		cv.WaitKey(50)
